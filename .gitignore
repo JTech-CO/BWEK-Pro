@@ -9,3 +9,6 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 로컬 전용 블로그 원고 (깃허브에 푸시하지 않음)
+blog-text.md
