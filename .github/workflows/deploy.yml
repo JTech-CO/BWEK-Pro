@@ -24,7 +24,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # npm install (npm ci 아님): Vite 8/Rolldown 의 플랫폼별 네이티브 바이너리는
+      # OS마다 다른 optional dependency 라, 단일 OS에서 만든 lockfile 로는
+      # 다른 OS의 npm ci 가 실패한다. install 은 실행 OS에 맞는 바이너리를 받는다.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
