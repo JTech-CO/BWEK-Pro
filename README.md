@@ -2,7 +2,7 @@
 
 > **인코딩 깨짐(이른바 뷁어·모지바케)을 양방향으로 번역·복원하는 서버리스 정적 웹앱**
 
-<img src="https://i.imgur.com/hMq1iZ0.png" width="100%">
+<img src="https://i.imgur.com/V1sgHGD.png" width="100%">
 
 🔗 **링크:** https://jtech-co.github.io/BWEK-Pro/
 
