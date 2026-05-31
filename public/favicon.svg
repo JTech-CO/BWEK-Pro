@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="뷁">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a72ea" />
+      <stop offset="1" stop-color="#11409c" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#g)" />
+  <text
+    x="32"
+    y="46"
+    font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif"
+    font-size="40"
+    font-weight="700"
+    fill="#ffffff"
+    text-anchor="middle"
+  >뷁</text>
+</svg>

@@ -1,0 +1,541 @@
+/* =========================================================
+   뷁어번역기 Pro — Windows XP "Luna(파랑)" 테마
+   원본의 무(無)CSS 디자인을 충실한 레트로 창으로 복원하되,
+   접근성(라벨/포커스/대비/반응형)을 끌어올린다.
+   외부 폰트 없이 시스템 폰트만 사용(서버리스/오프라인 친화).
+   ========================================================= */
+
+:root {
+  --face: #ece9d8; /* XP 3D 표면(베이지 그레이) */
+  --face-edge: #aca899; /* 표면 그림자 */
+  --field: #ffffff;
+  --ink: #1a1a1a;
+  --ink-soft: #5a5751;
+  --frame: #0b4dc0; /* Luna 창 프레임 파랑 */
+  --field-border: #7f9db9; /* 입력칸 테두리 */
+  --focus: #2a6fe0;
+  --btn-border: #003c74;
+
+  --font-ui: 'Tahoma', 'Malgun Gothic', 'Segoe UI', sans-serif;
+  --font-title: 'Trebuchet MS', 'Tahoma', 'Malgun Gothic', sans-serif;
+  --font-text: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Yu Gothic', 'Meiryo',
+    'MS PGothic', 'Tahoma', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+  /* XP 기본 데스크톱을 연상시키는 차분한 파랑 (저채도, 네온 금지) */
+  background: linear-gradient(160deg, #6b93d4 0%, #3f63a8 100%);
+  min-height: 100vh;
+}
+
+.desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: clamp(16px, 6vh, 64px) 16px 32px;
+  gap: 14px;
+}
+
+/* ---------------- 창 ---------------- */
+.window {
+  width: 100%;
+  max-width: 680px;
+  background: var(--frame);
+  border-radius: 8px 8px 0 0;
+  padding: 0 3px 3px; /* 좌·우·아래 3px Luna 프레임 */
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* 타이틀바: XP 글로시 블루 그라데이션 */
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  margin: 0 -3px; /* 좌우 프레임 위로 끌어와 폭 전체를 덮음 */
+  padding: 0 4px 0 7px;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(
+    to bottom,
+    #2a72ea 0%,
+    #1c60db 7%,
+    #1a5cd6 12%,
+    #2470e8 44%,
+    #2470e8 50%,
+    #135ad2 53%,
+    #1a62de 82%,
+    #2872ea 92%,
+    #1b56c6 96%,
+    #11409c 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(160deg, #fefefe33, #00000022);
+  border-radius: 3px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.title-text {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.window-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.ctrl {
+  width: 22px;
+  height: 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 3px;
+  cursor: pointer;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to bottom, #5e93f0, #3a78e6 48%, #2868d8 52%, #4a85ec);
+}
+
+.ctrl:hover {
+  filter: brightness(1.12);
+}
+.ctrl:active {
+  filter: brightness(0.9);
+}
+
+.ctrl-close {
+  background: linear-gradient(to bottom, #f08a7a, #e15a45 48%, #d23f2c 52%, #ed7058);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+.ctrl[data-noop] {
+  opacity: 0.92;
+  cursor: default;
+}
+
+/* ---------------- 본문 ---------------- */
+.window-body {
+  background: var(--face);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.field-label {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.counter {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 입력/결과 텍스트 영역: 가라앉은(sunken) XP 필드 */
+.xp-textarea {
+  width: 100%;
+  min-height: 96px;
+  resize: vertical;
+  padding: 8px 9px;
+  font-family: var(--font-text);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid var(--field-border);
+  border-radius: 0;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.16);
+  outline: none;
+}
+
+.xp-textarea[readonly] {
+  background: #fbfbf7;
+  color: #111;
+}
+
+.xp-textarea:focus {
+  border-color: var(--focus);
+  box-shadow:
+    inset 1px 1px 2px rgba(0, 0, 0, 0.16),
+    0 0 0 2px rgba(42, 111, 224, 0.3);
+}
+
+/* 레트로 스크롤바 */
+.xp-textarea {
+  scrollbar-width: auto;
+  scrollbar-color: #c9c5b6 #ece9d8;
+}
+.xp-textarea::-webkit-scrollbar {
+  width: 17px;
+  height: 17px;
+}
+.xp-textarea::-webkit-scrollbar-track {
+  background: #f1efe4;
+  box-shadow: inset 1px 0 #c3bfb0;
+}
+.xp-textarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #f6f4ec, #cbc7b8);
+  border: 1px solid #9b9788;
+  box-shadow: inset 1px 1px #ffffff;
+}
+.xp-textarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #fbfaf4, #d8d4c4);
+}
+
+/* ---------------- 컨트롤 ---------------- */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: #f4f2e9;
+  border: 1px solid var(--face-edge);
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.preset-row,
+.custom-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+
+.inline-label {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.arrow {
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.xp-select {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+  padding: 3px 6px;
+  background: #fff;
+  border: 1px solid var(--field-border);
+  border-radius: 0;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.12);
+  min-width: 0;
+}
+.preset-row .xp-select {
+  flex: 1;
+  min-width: 200px;
+}
+.xp-select:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px rgba(42, 111, 224, 0.3);
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* XP Luna 버튼 */
+.xp-btn {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+  padding: 6px 14px;
+  min-height: 30px;
+  cursor: pointer;
+  border: 1px solid var(--btn-border);
+  border-radius: 3px;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #f5f4ee 45%,
+    #e3e0d1 52%,
+    #f1efe4 100%
+  );
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  transition:
+    filter 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+.xp-btn:hover {
+  filter: brightness(1.03);
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 0 0 1px rgba(255, 176, 50, 0.55); /* XP 특유의 옅은 주황 호버 글로우 */
+}
+
+.xp-btn:active {
+  background: linear-gradient(to bottom, #d9d6c8, #eceadf 60%, #f6f4ea);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25);
+  transform: translateY(1px);
+}
+
+.xp-btn.primary {
+  font-weight: 700;
+  flex: 1 1 auto;
+  min-width: 130px;
+}
+
+/* 현재 선택된 변환 방향 강조 (XP 기본 버튼의 파란 테 느낌) */
+.xp-btn.primary.active {
+  border-color: #1c5fb0;
+  background: linear-gradient(to bottom, #eaf3ff 0%, #cfe2fb 50%, #bcd6f6 52%, #e2eefc 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    0 0 0 1px rgba(28, 95, 176, 0.55);
+}
+
+.xp-btn.small {
+  font-size: 13px;
+  padding: 4px 10px;
+  min-height: 26px;
+}
+
+.note {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  min-height: 1em;
+}
+
+.output-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.status {
+  font-size: 12.5px;
+  color: #1c5fb0;
+  font-weight: 700;
+  min-height: 1em;
+}
+
+/* ---------------- 스마트 복원 후보 ---------------- */
+.guesses {
+  border: 1px solid var(--field-border);
+  background: #fbfbf7;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.guesses-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.guess-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guess {
+  border: 1px solid var(--face-edge);
+  background: var(--face);
+  box-shadow: inset 1px 1px 0 #fff;
+  padding: 8px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.guess.empty {
+  color: var(--ink-soft);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 4px 0;
+}
+
+.guess-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.guess-label {
+  font-weight: 700;
+}
+.guess-conf {
+  font-size: 12px;
+  color: #1c5fb0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.guess-preview {
+  font-family: var(--font-text);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111;
+  background: #fff;
+  border: 1px solid var(--field-border);
+  padding: 6px 8px;
+  max-height: 92px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.guess .xp-btn {
+  align-self: flex-start;
+}
+
+/* ---------------- 상태 표시줄 ---------------- */
+.statusbar {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  background: var(--face);
+  border-top: 1px solid #fff;
+}
+.status-cell {
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 2px 8px;
+  border: 1px solid #d6d2c2;
+  box-shadow: inset 1px 1px 0 #fff;
+  background: #f3f1e9;
+}
+.status-cell.grow {
+  flex: 1;
+}
+.status-cell.link {
+  text-decoration: none;
+  color: #1c5fb0;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.status-cell.link:hover {
+  text-decoration: underline;
+}
+
+.noscript-note {
+  background: #fff;
+  border: 1px solid var(--field-border);
+  padding: 12px 16px;
+  max-width: 680px;
+  color: var(--ink);
+}
+
+/* ---------------- 포커스(접근성) ----------------
+   클래식 Windows 점선 포커스 사각형 = 레트로이면서 접근성에도 충실 */
+.xp-btn:focus-visible,
+.ctrl:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+.status-cell.link:focus-visible {
+  outline: 1px dotted #1c5fb0;
+  outline-offset: 2px;
+}
+
+/* ---------------- 반응형 ---------------- */
+@media (max-width: 560px) {
+  body {
+    font-size: 15px;
+  }
+  .desktop {
+    padding: 10px 8px 24px;
+  }
+  .window {
+    max-width: 100%;
+  }
+  .window-body {
+    padding: 11px;
+  }
+  .action-row .xp-btn {
+    flex: 1 1 100%;
+  }
+  .xp-btn.primary {
+    flex: 1 1 calc(50% - 4px);
+  }
+  .preset-row .xp-select {
+    flex: 1 1 100%;
+  }
+  .xp-textarea {
+    font-size: 16px; /* iOS 확대 방지 */
+  }
+}
+
+/* ---------------- 모션 최소화 ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  .xp-btn:active {
+    transform: none;
+  }
+}

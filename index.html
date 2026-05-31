@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>뷁어번역기 Pro</title>
+    <meta
+      name="description"
+      content="뷁어(인코딩 깨짐/모지바케)를 일본어·한국어·중국어·UTF-8 등으로 양방향 변환하는 서버리스 정적 웹앱. 깨진 글을 자동으로 복원하는 스마트 복원 기능 포함."
+    />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="뷁어번역기 Pro" />
+    <meta
+      property="og:description"
+      content="깨진 글(뷁어)을 일본어·한국어·중국어·UTF-8 등으로 양방향 변환 · 스마트 복원"
+    />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <main class="desktop">
+      <section class="window" aria-labelledby="win-title">
+        <header class="titlebar">
+          <span class="title-icon" aria-hidden="true">뷁</span>
+          <h1 class="title-text" id="win-title">뷁어번역기 Pro</h1>
+          <div class="window-controls">
+            <button type="button" class="ctrl ctrl-min" data-noop aria-label="최소화" tabindex="-1">
+              <span aria-hidden="true">_</span>
+            </button>
+            <button type="button" class="ctrl ctrl-max" data-noop aria-label="최대화" tabindex="-1">
+              <span aria-hidden="true">▭</span>
+            </button>
+            <button type="button" class="ctrl ctrl-close" id="closeBtn" aria-label="모두 지우기">
+              <span aria-hidden="true">✕</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="window-body">
+          <!-- 입력 -->
+          <div class="field">
+            <div class="field-head">
+              <label class="field-label" for="input">입력</label>
+              <span class="counter" id="inCount" aria-live="off">0자</span>
+            </div>
+            <textarea
+              id="input"
+              class="xp-textarea"
+              rows="4"
+              spellcheck="false"
+              autocomplete="off"
+              autocapitalize="off"
+              placeholder="여기에 일본어, 또는 깨진 글(뷁어)을 입력하세요…"
+            ></textarea>
+          </div>
+
+          <!-- 변환 컨트롤 -->
+          <div class="controls">
+            <div class="preset-row">
+              <label class="inline-label" for="preset">변환 종류</label>
+              <select id="preset" class="xp-select"></select>
+            </div>
+
+            <div class="custom-row" id="customRow" hidden>
+              <label class="inline-label" for="fromEnc">원본 인코딩</label>
+              <select id="fromEnc" class="xp-select"></select>
+              <span class="arrow" aria-hidden="true">→</span>
+              <label class="inline-label" for="toEnc">읽은 인코딩</label>
+              <select id="toEnc" class="xp-select"></select>
+            </div>
+
+            <div class="action-row" role="group" aria-label="변환 방향">
+              <button type="button" class="xp-btn primary" id="forwardBtn" aria-pressed="true">
+                일본어 → 뷁어
+              </button>
+              <button type="button" class="xp-btn primary" id="backwardBtn" aria-pressed="false">
+                뷁어 → 일본어
+              </button>
+              <button type="button" class="xp-btn" id="smartBtn">스마트 복원</button>
+              <button type="button" class="xp-btn" id="swapBtn" title="입력과 결과를 맞바꿉니다">
+                ⇅ 스왑
+              </button>
+              <button type="button" class="xp-btn" id="resetBtn">리셋</button>
+            </div>
+
+            <p class="note" id="note"></p>
+          </div>
+
+          <!-- 결과 -->
+          <div class="field">
+            <div class="field-head">
+              <label class="field-label" for="output">결과</label>
+              <span class="counter" id="outCount" aria-live="off">0자</span>
+            </div>
+            <textarea
+              id="output"
+              class="xp-textarea"
+              rows="4"
+              readonly
+              spellcheck="false"
+              aria-live="polite"
+              placeholder="변환 결과가 여기에 표시됩니다."
+            ></textarea>
+            <div class="output-actions">
+              <button type="button" class="xp-btn small" id="copyBtn">결과 복사</button>
+              <button type="button" class="xp-btn small" id="shareBtn">공유 링크 복사</button>
+              <span class="status" id="status" role="status" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <!-- 스마트 복원 후보 -->
+          <div class="guesses" id="guesses" hidden>
+            <h2 class="guesses-title">스마트 복원 후보</h2>
+            <ul class="guess-list" id="guessList"></ul>
+          </div>
+        </div>
+
+        <footer class="statusbar">
+          <span class="status-cell grow">서버 없이 브라우저에서 동작 · 입력 내용은 전송되지 않습니다</span>
+          <a
+            class="status-cell link"
+            id="repoLink"
+            href="https://github.com/JTech-CO/BWEK-Pro"
+            target="_blank"
+            rel="noopener"
+            >소스 보기</a
+          >
+        </footer>
+      </section>
+
+      <noscript>
+        <p class="noscript-note">
+          이 도구는 JavaScript로 동작합니다. 브라우저에서 JavaScript를 켜 주세요.
+        </p>
+      </noscript>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

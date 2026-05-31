@@ -1,0 +1,18 @@
+{
+  "name": "bwek-translator-pro",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "뷁어번역기 Pro — 인코딩 깨짐(뷁어/모지바케) 다방면 상호 변환기. 서버 없이 브라우저에서 동작하는 정적 페이지.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14"
+  }
+}
