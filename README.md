@@ -2,7 +2,9 @@
 
 > **인코딩 깨짐(이른바 뷁어·모지바케)을 양방향으로 번역·복원하는 서버리스 정적 웹앱**
 
-🔗 **데모:** https://jtech-co.github.io/BWEK-Pro/
+<img src="https://i.imgur.com/hMq1iZ0.png" width="100%">
+
+🔗 **링크:** https://jtech-co.github.io/BWEK-Pro/
 
 ## 1. 소개 (Introduction)
 
@@ -61,8 +63,6 @@ src/
 └── main.ts            # UI 바인딩 및 이벤트
 ```
 
-## 5. 정보 (Info)
+## 5. 라이선스 (License)
 
-- **License**: MIT (자세한 내용은 [LICENSE](LICENSE) 참고)
-- **Demo**: https://jtech-co.github.io/BWEK-Pro/
-- **Repository**: https://github.com/JTech-CO/BWEK-Pro
+- **MIT** 
