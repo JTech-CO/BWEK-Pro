@@ -5,7 +5,7 @@ import type { RestoreGuess } from './lib/detect';
 
 type Lib = typeof import('./lib');
 
-// 무거운 변환 엔진(codepage 포함)은 동적 import 로 지연 로드된다.
+// 변환 엔진은 동적 import 로 지연 로드된다(초기 번들 최소화).
 let L: Lib;
 
 // ---------- DOM 참조 ----------
@@ -63,12 +63,17 @@ function updateCounts(): void {
 
 function syncButtons(): void {
   const p = currentPreset();
+  const oneWay = p.oneWay === true;
+  if (oneWay) direction = 'forward'; // 한 방향 프리셋(뷰어)은 항상 forward
+
   forwardBtn.textContent = p.forwardLabel;
   backwardBtn.textContent = p.backwardLabel;
+  backwardBtn.hidden = oneWay;
   forwardBtn.setAttribute('aria-pressed', String(direction === 'forward'));
   backwardBtn.setAttribute('aria-pressed', String(direction === 'backward'));
   forwardBtn.classList.toggle('active', direction === 'forward');
   backwardBtn.classList.toggle('active', direction === 'backward');
+  output.classList.toggle('mono', oneWay);
   noteEl.textContent = p.note ?? '';
 }
 
@@ -226,11 +231,19 @@ function debounce(fn: () => void, ms: number): () => void {
 
 // ---------- 셀렉트 채우기 ----------
 function populatePresetSelect(): void {
+  const groups = new Map<string, HTMLOptGroupElement>();
   for (const p of L.PRESETS) {
+    let group = groups.get(p.group);
+    if (!group) {
+      group = document.createElement('optgroup');
+      group.label = p.group;
+      groups.set(p.group, group);
+      presetSel.append(group);
+    }
     const opt = document.createElement('option');
     opt.value = p.id;
     opt.textContent = p.label;
-    presetSel.append(opt);
+    group.append(opt);
   }
   const custom = document.createElement('option');
   custom.value = L.CUSTOM_PRESET_ID;

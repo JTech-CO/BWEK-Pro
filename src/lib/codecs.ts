@@ -1,14 +1,10 @@
 /**
- * 뷁어(모지바케)의 핵심: 어떤 인코딩으로 만든 바이트를 다른 인코딩으로 잘못 읽으면
- * 글자가 깨진다. 모든 변환은 `reinterpret(text, from, to)` 한 줄로 표현된다.
+ * 뷁어(모지바케) = 어떤 인코딩의 바이트를 다른 인코딩으로 잘못 읽어 글자가 깨지는 현상.
+ * 모든 변환은 reinterpret(text, from, to) = decode(to, encode(from, text)) 한 줄이다.
  *
- * 디코딩(바이트→문자)은 브라우저 내장 TextDecoder 를 그대로 쓴다. 브라우저의
- * TextDecoder 는 WHATWG 표준에 따라 shift_jis / euc-kr(=CP949·UHC 슈퍼셋) /
- * euc-jp / gbk / big5 / windows-1252 등을 모두 지원한다(별도 데이터 번들 불필요).
- *
- * 인코딩(문자→바이트)은 표준 API 가 UTF-8 만 지원하므로, 같은 인코딩의
- * TextDecoder 를 역으로 훑어 "문자→바이트" 표를 런타임에 만들어 캐시한다.
- * 한 인코딩의 인코딩/디코딩이 모두 동일한 내장 테이블에서 나오므로 왕복이 일관된다.
+ * 디코딩은 브라우저 내장 TextDecoder 를 쓴다(euc-kr 라벨 = CP949/UHC 슈퍼셋).
+ * 인코딩은 표준 API 가 UTF-8 만 지원하므로, 같은 인코딩의 TextDecoder 를 역으로
+ * 훑어 "문자→바이트" 표를 런타임에 만들어 캐시한다 → 인코딩 데이터 무번들.
  */
 
 export type EncId =
@@ -25,9 +21,8 @@ export type EncId =
 
 export interface EncodingInfo {
   id: EncId;
-  /** 사람이 읽는 이름 */
   label: string;
-  /** UI 그룹(언어) 태그 */
+  /** UI 셀렉트의 optgroup 으로 쓰이는 언어 묶음 */
   group: string;
 }
 
@@ -83,7 +78,6 @@ function decoder(enc: EncId): TextDecoder {
   return d;
 }
 
-/** JS 문자열을 해당 인코딩의 바이트로 변환한다. */
 export function encode(enc: EncId, text: string): Uint8Array {
   switch (enc) {
     case 'utf-8':
@@ -99,7 +93,6 @@ export function encode(enc: EncId, text: string): Uint8Array {
   }
 }
 
-/** 바이트를 해당 인코딩으로 디코딩해 JS 문자열로 만든다. */
 export function decode(enc: EncId, bytes: Uint8Array): string {
   if (enc === 'latin1') {
     // 진짜 ISO-8859-1: 바이트 b → U+00b (브라우저 TextDecoder 는 latin1 을
@@ -111,10 +104,6 @@ export function decode(enc: EncId, bytes: Uint8Array): string {
   return decoder(enc).decode(bytes);
 }
 
-/**
- * `from` 인코딩으로 만든 바이트를 `to` 인코딩으로 다시 읽는다.
- * 이것이 모든 깨짐/복원의 단일 연산이다.
- */
 export function reinterpret(text: string, from: EncId, to: EncId): string {
   if (!text) return '';
   return decode(to, encode(from, text));

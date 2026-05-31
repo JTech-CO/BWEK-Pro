@@ -212,6 +212,12 @@ body {
   color: #111;
 }
 
+/* 코드포인트 뷰어 출력은 고정폭으로 (바이트 정렬 가독성) */
+.xp-textarea.mono {
+  font-family: ui-monospace, 'Consolas', 'DejaVu Sans Mono', 'D2Coding', monospace;
+  font-size: 13px;
+}
+
 .xp-textarea:focus {
   border-color: var(--focus);
   box-shadow:
